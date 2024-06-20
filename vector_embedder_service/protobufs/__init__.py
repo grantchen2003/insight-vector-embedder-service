@@ -1,0 +1,1 @@
+from . import vector_embedder_service_pb2, vector_embedder_service_pb2_grpc

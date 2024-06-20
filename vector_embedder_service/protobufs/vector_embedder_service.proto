@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+
+message BatchVectorEmbedFileComponentsRequest {
+    repeated int32 file_component_ids = 1;
+}
+
+message FileComponentVectorEmbedding {
+    int32 id = 1;
+    int32 file_component_id = 2;
+    repeated int32 vector_embedding = 3;
+}
+
+message FileComponentVectorEmbeddings {
+    repeated FileComponentVectorEmbedding file_component_vector_embeddings = 1;
+}
+
+service VectorEmbedderService {
+    rpc BatchVectorEmbedFileComponents(BatchVectorEmbedFileComponentsRequest) returns (FileComponentVectorEmbeddings);
+}
+
