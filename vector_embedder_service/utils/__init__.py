@@ -1,1 +1,1 @@
-from .word2vec_embedder import Word2VecEmbedder
+from .code_bert import CodeBert

@@ -3,32 +3,35 @@ from vector_embedder_service.protobufs import (
     vector_embedder_service_pb2_grpc,
 )
 
-from vector_embedder_service import utils
-
-from vector_embedder_service.services import summarizer_service
+from vector_embedder_service import database, utils
+from vector_embedder_service.services import file_components_service
 
 
 class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderService):
     def BatchVectorEmbedFileComponents(self, request, _):
         print("received BatchVectorEmbedFileComponents request")
 
-        file_component_summaries = summarizer_service.get_file_component_summaries(
+        file_components = file_components_service.get_file_components(
             request.file_component_ids
         )
 
-        file_component_vector_embeddings = []
+        file_component_vector_embeddings = [
+            {
+                "file_component_id": file_component["id"],
+                "user_id": file_component["user_id"],
+                "vector_embedding": utils.CodeBert.vector_embed_source_code(
+                    file_component["content"]
+                ),
+            }
+            for file_component in file_components
+        ]
 
-        for file_component_summary in file_component_summaries:
-            vector_embedding = utils.Word2VecEmbedder.vector_embed_sentence(
-                file_component_summary.summary
-            )
-            file_component_vector_embeddings.append(
-                {
-                    "file_component_id": file_component_summary["id"],
-                    "vector_embedding": vector_embedding,
-                }
-            )
+        db = database.get_singleton_instance()
 
-        return vector_embedder_service_pb2.FileComponentVectorEmbeddings(
-            file_component_vector_embeddings=file_component_vector_embeddings
+        file_component_vector_embedding_ids = db.save_file_component_vector_embeddings(
+            file_component_vector_embeddings
+        )
+
+        return vector_embedder_service_pb2.BatchVectorEmbedFileComponentsResponse(
+            file_component_vector_embedding_ids=file_component_vector_embedding_ids
         )

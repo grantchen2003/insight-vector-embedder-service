@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dvector_embedder_service.proto\"C\n%BatchVectorEmbedFileComponentsRequest\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\"_\n\x1c\x46ileComponentVectorEmbedding\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x19\n\x11\x66ile_component_id\x18\x02 \x01(\x05\x12\x18\n\x10vector_embedding\x18\x03 \x03(\x05\"h\n\x1d\x46ileComponentVectorEmbeddings\x12G\n file_component_vector_embeddings\x18\x01 \x03(\x0b\x32\x1d.FileComponentVectorEmbedding2\x81\x01\n\x15VectorEmbedderService\x12h\n\x1e\x42\x61tchVectorEmbedFileComponents\x12&.BatchVectorEmbedFileComponentsRequest\x1a\x1e.FileComponentVectorEmbeddingsb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dvector_embedder_service.proto\"C\n%BatchVectorEmbedFileComponentsRequest\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\"U\n&BatchVectorEmbedFileComponentsResponse\x12+\n#file_component_vector_embedding_ids\x18\x01 \x03(\x05\x32\x8a\x01\n\x15VectorEmbedderService\x12q\n\x1e\x42\x61tchVectorEmbedFileComponents\x12&.BatchVectorEmbedFileComponentsRequest\x1a\'.BatchVectorEmbedFileComponentsResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -23,10 +23,8 @@ if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_BATCHVECTOREMBEDFILECOMPONENTSREQUEST']._serialized_start=33
   _globals['_BATCHVECTOREMBEDFILECOMPONENTSREQUEST']._serialized_end=100
-  _globals['_FILECOMPONENTVECTOREMBEDDING']._serialized_start=102
-  _globals['_FILECOMPONENTVECTOREMBEDDING']._serialized_end=197
-  _globals['_FILECOMPONENTVECTOREMBEDDINGS']._serialized_start=199
-  _globals['_FILECOMPONENTVECTOREMBEDDINGS']._serialized_end=303
-  _globals['_VECTOREMBEDDERSERVICE']._serialized_start=306
-  _globals['_VECTOREMBEDDERSERVICE']._serialized_end=435
+  _globals['_BATCHVECTOREMBEDFILECOMPONENTSRESPONSE']._serialized_start=102
+  _globals['_BATCHVECTOREMBEDFILECOMPONENTSRESPONSE']._serialized_end=187
+  _globals['_VECTOREMBEDDERSERVICE']._serialized_start=190
+  _globals['_VECTOREMBEDDERSERVICE']._serialized_end=328
 # @@protoc_insertion_point(module_scope)

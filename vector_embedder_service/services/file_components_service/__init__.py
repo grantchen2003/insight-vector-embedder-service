@@ -1,0 +1,1 @@
+from .file_components_service import get_file_components

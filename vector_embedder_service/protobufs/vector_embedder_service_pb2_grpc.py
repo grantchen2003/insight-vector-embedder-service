@@ -42,7 +42,7 @@ class VectorEmbedderServiceStub(object):
         self.BatchVectorEmbedFileComponents = channel.unary_unary(
                 '/VectorEmbedderService/BatchVectorEmbedFileComponents',
                 request_serializer=vector__embedder__service__pb2.BatchVectorEmbedFileComponentsRequest.SerializeToString,
-                response_deserializer=vector__embedder__service__pb2.FileComponentVectorEmbeddings.FromString,
+                response_deserializer=vector__embedder__service__pb2.BatchVectorEmbedFileComponentsResponse.FromString,
                 _registered_method=True)
 
 
@@ -61,7 +61,7 @@ def add_VectorEmbedderServiceServicer_to_server(servicer, server):
             'BatchVectorEmbedFileComponents': grpc.unary_unary_rpc_method_handler(
                     servicer.BatchVectorEmbedFileComponents,
                     request_deserializer=vector__embedder__service__pb2.BatchVectorEmbedFileComponentsRequest.FromString,
-                    response_serializer=vector__embedder__service__pb2.FileComponentVectorEmbeddings.SerializeToString,
+                    response_serializer=vector__embedder__service__pb2.BatchVectorEmbedFileComponentsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -90,7 +90,7 @@ class VectorEmbedderService(object):
             target,
             '/VectorEmbedderService/BatchVectorEmbedFileComponents',
             vector__embedder__service__pb2.BatchVectorEmbedFileComponentsRequest.SerializeToString,
-            vector__embedder__service__pb2.FileComponentVectorEmbeddings.FromString,
+            vector__embedder__service__pb2.BatchVectorEmbedFileComponentsResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -1,1 +1,0 @@
-from .summarizer_service import get_file_component_summaries
