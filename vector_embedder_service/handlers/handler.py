@@ -8,8 +8,8 @@ from vector_embedder_service.services import file_components_service
 
 
 class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderService):
-    def BatchVectorEmbedFileComponents(self, request, _):
-        print("received BatchVectorEmbedFileComponents request")
+    def CreateFileComponentVectorEmbeddings(self, request, _):
+        print("received CreateFileComponentVectorEmbeddings request")
 
         file_components = file_components_service.get_file_components(
             request.file_component_ids
@@ -32,6 +32,6 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
             file_component_vector_embeddings
         )
 
-        return vector_embedder_service_pb2.BatchVectorEmbedFileComponentsResponse(
+        return vector_embedder_service_pb2.CreateFileComponentVectorEmbeddingsResponse(
             file_component_vector_embedding_ids=file_component_vector_embedding_ids
         )

@@ -14,17 +14,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dvector_embedder_service.proto\"C\n%BatchVectorEmbedFileComponentsRequest\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\"U\n&BatchVectorEmbedFileComponentsResponse\x12+\n#file_component_vector_embedding_ids\x18\x01 \x03(\x05\x32\x8a\x01\n\x15VectorEmbedderService\x12q\n\x1e\x42\x61tchVectorEmbedFileComponents\x12&.BatchVectorEmbedFileComponentsRequest\x1a\'.BatchVectorEmbedFileComponentsResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dvector_embedder_service.proto\"H\n*CreateFileComponentVectorEmbeddingsRequest\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\"Z\n+CreateFileComponentVectorEmbeddingsResponse\x12+\n#file_component_vector_embedding_ids\x18\x01 \x03(\x05\x32\x9a\x01\n\x15VectorEmbedderService\x12\x80\x01\n#CreateFileComponentVectorEmbeddings\x12+.CreateFileComponentVectorEmbeddingsRequest\x1a,.CreateFileComponentVectorEmbeddingsResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'vector_embedder_service_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_BATCHVECTOREMBEDFILECOMPONENTSREQUEST']._serialized_start=33
-  _globals['_BATCHVECTOREMBEDFILECOMPONENTSREQUEST']._serialized_end=100
-  _globals['_BATCHVECTOREMBEDFILECOMPONENTSRESPONSE']._serialized_start=102
-  _globals['_BATCHVECTOREMBEDFILECOMPONENTSRESPONSE']._serialized_end=187
-  _globals['_VECTOREMBEDDERSERVICE']._serialized_start=190
-  _globals['_VECTOREMBEDDERSERVICE']._serialized_end=328
+  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSREQUEST']._serialized_start=33
+  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSREQUEST']._serialized_end=105
+  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSRESPONSE']._serialized_start=107
+  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSRESPONSE']._serialized_end=197
+  _globals['_VECTOREMBEDDERSERVICE']._serialized_start=200
+  _globals['_VECTOREMBEDDERSERVICE']._serialized_end=354
 # @@protoc_insertion_point(module_scope)

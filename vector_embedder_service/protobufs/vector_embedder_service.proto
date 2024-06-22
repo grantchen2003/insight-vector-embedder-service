@@ -1,15 +1,15 @@
 syntax = "proto3";
 
 
-message BatchVectorEmbedFileComponentsRequest {
+message CreateFileComponentVectorEmbeddingsRequest {
     repeated int32 file_component_ids = 1;
 }
 
-message BatchVectorEmbedFileComponentsResponse {
+message CreateFileComponentVectorEmbeddingsResponse {
     repeated int32 file_component_vector_embedding_ids = 1;
 }
 
 service VectorEmbedderService {
-    rpc BatchVectorEmbedFileComponents(BatchVectorEmbedFileComponentsRequest) returns (BatchVectorEmbedFileComponentsResponse);
+    rpc CreateFileComponentVectorEmbeddings(CreateFileComponentVectorEmbeddingsRequest) returns (CreateFileComponentVectorEmbeddingsResponse);
 }
 

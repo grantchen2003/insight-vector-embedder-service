@@ -39,17 +39,17 @@ class VectorEmbedderServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.BatchVectorEmbedFileComponents = channel.unary_unary(
-                '/VectorEmbedderService/BatchVectorEmbedFileComponents',
-                request_serializer=vector__embedder__service__pb2.BatchVectorEmbedFileComponentsRequest.SerializeToString,
-                response_deserializer=vector__embedder__service__pb2.BatchVectorEmbedFileComponentsResponse.FromString,
+        self.CreateFileComponentVectorEmbeddings = channel.unary_unary(
+                '/VectorEmbedderService/CreateFileComponentVectorEmbeddings',
+                request_serializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsRequest.SerializeToString,
+                response_deserializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsResponse.FromString,
                 _registered_method=True)
 
 
 class VectorEmbedderServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def BatchVectorEmbedFileComponents(self, request, context):
+    def CreateFileComponentVectorEmbeddings(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -58,10 +58,10 @@ class VectorEmbedderServiceServicer(object):
 
 def add_VectorEmbedderServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'BatchVectorEmbedFileComponents': grpc.unary_unary_rpc_method_handler(
-                    servicer.BatchVectorEmbedFileComponents,
-                    request_deserializer=vector__embedder__service__pb2.BatchVectorEmbedFileComponentsRequest.FromString,
-                    response_serializer=vector__embedder__service__pb2.BatchVectorEmbedFileComponentsResponse.SerializeToString,
+            'CreateFileComponentVectorEmbeddings': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateFileComponentVectorEmbeddings,
+                    request_deserializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsRequest.FromString,
+                    response_serializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -75,7 +75,7 @@ class VectorEmbedderService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def BatchVectorEmbedFileComponents(request,
+    def CreateFileComponentVectorEmbeddings(request,
             target,
             options=(),
             channel_credentials=None,
@@ -88,9 +88,9 @@ class VectorEmbedderService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/VectorEmbedderService/BatchVectorEmbedFileComponents',
-            vector__embedder__service__pb2.BatchVectorEmbedFileComponentsRequest.SerializeToString,
-            vector__embedder__service__pb2.BatchVectorEmbedFileComponentsResponse.FromString,
+            '/VectorEmbedderService/CreateFileComponentVectorEmbeddings',
+            vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsRequest.SerializeToString,
+            vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsResponse.FromString,
             options,
             channel_credentials,
             insecure,
