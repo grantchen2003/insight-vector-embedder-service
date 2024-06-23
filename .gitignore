@@ -1,4 +1,4 @@
 .venv
 .env.dev
 __pycache__
-GoogleNews-vectors-negative300.bin.gz
+localdb
