@@ -6,10 +6,21 @@ message CreateFileComponentVectorEmbeddingsRequest {
 }
 
 message CreateFileComponentVectorEmbeddingsResponse {
-    repeated int32 file_component_vector_embedding_ids = 1;
+    repeated string file_component_vector_embedding_ids = 1;
+}
+
+message GetSimilarFileComponentIdsRequest {
+    string user_id = 1;
+    string query = 2;
+    int32 limit = 3;
+}
+
+message GetSimilarFileComponentIdsResponse {
+    repeated int32 file_component_ids = 1;
 }
 
 service VectorEmbedderService {
+    rpc GetSimilarFileComponentIds(GetSimilarFileComponentIdsRequest) returns (GetSimilarFileComponentIdsResponse);
     rpc CreateFileComponentVectorEmbeddings(CreateFileComponentVectorEmbeddingsRequest) returns (CreateFileComponentVectorEmbeddingsResponse);
 }
 

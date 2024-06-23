@@ -1,6 +1,6 @@
 import os
     
-from vector_embedder_service import config, server, utils
+from vector_embedder_service import config, database, server, utils
 
 
 def main() -> None:
@@ -9,6 +9,9 @@ def main() -> None:
     print(f"ENV={env}")
     
     utils.CodeBert.initialize()
+    
+    db = database.get_singleton_instance()
+    db.connect()
 
     server.start()
     

@@ -13,11 +13,11 @@ class CodeBert:
         cls._model = RobertaModel.from_pretrained("microsoft/codebert-base")
 
     @classmethod
-    def vector_embed_source_code(cls, source_code: str) -> list[float]:
+    def vector_embed(cls, text: str) -> list[float]:
 
         # Tokenize the input source code
         inputs = cls._tokenizer(
-            source_code, return_tensors="pt", truncation=True, padding=True
+            text, return_tensors="pt", truncation=True, padding=True
         )
 
         # Get the embeddings

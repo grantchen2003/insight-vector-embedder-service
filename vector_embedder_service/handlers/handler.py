@@ -19,7 +19,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
             {
                 "file_component_id": file_component["id"],
                 "user_id": file_component["user_id"],
-                "vector_embedding": utils.CodeBert.vector_embed_source_code(
+                "vector_embedding": utils.CodeBert.vector_embed(
                     file_component["content"]
                 ),
             }
@@ -34,4 +34,19 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
 
         return vector_embedder_service_pb2.CreateFileComponentVectorEmbeddingsResponse(
             file_component_vector_embedding_ids=file_component_vector_embedding_ids
+        )
+
+    def GetSimilarFileComponentIds(self, request, _):
+        print("received GetSimilarFileComponentIds request")
+
+        query_vector_embedding = utils.CodeBert.vector_embed(request.query)
+
+        db = database.get_singleton_instance()
+
+        file_component_ids = db.get_similar_file_component_ids(
+            request.user_id, query_vector_embedding, request.limit
+        )
+
+        return vector_embedder_service_pb2.GetSimilarFileComponentIdsResponse(
+            file_component_ids=file_component_ids
         )
