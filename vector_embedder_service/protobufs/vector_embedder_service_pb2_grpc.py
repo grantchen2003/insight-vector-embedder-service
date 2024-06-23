@@ -39,6 +39,11 @@ class VectorEmbedderServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.GetSimilarFileComponentIds = channel.unary_unary(
+                '/VectorEmbedderService/GetSimilarFileComponentIds',
+                request_serializer=vector__embedder__service__pb2.GetSimilarFileComponentIdsRequest.SerializeToString,
+                response_deserializer=vector__embedder__service__pb2.GetSimilarFileComponentIdsResponse.FromString,
+                _registered_method=True)
         self.CreateFileComponentVectorEmbeddings = channel.unary_unary(
                 '/VectorEmbedderService/CreateFileComponentVectorEmbeddings',
                 request_serializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsRequest.SerializeToString,
@@ -49,6 +54,12 @@ class VectorEmbedderServiceStub(object):
 class VectorEmbedderServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
+    def GetSimilarFileComponentIds(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def CreateFileComponentVectorEmbeddings(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -58,6 +69,11 @@ class VectorEmbedderServiceServicer(object):
 
 def add_VectorEmbedderServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'GetSimilarFileComponentIds': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSimilarFileComponentIds,
+                    request_deserializer=vector__embedder__service__pb2.GetSimilarFileComponentIdsRequest.FromString,
+                    response_serializer=vector__embedder__service__pb2.GetSimilarFileComponentIdsResponse.SerializeToString,
+            ),
             'CreateFileComponentVectorEmbeddings': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateFileComponentVectorEmbeddings,
                     request_deserializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsRequest.FromString,
@@ -73,6 +89,33 @@ def add_VectorEmbedderServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class VectorEmbedderService(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def GetSimilarFileComponentIds(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/VectorEmbedderService/GetSimilarFileComponentIds',
+            vector__embedder__service__pb2.GetSimilarFileComponentIdsRequest.SerializeToString,
+            vector__embedder__service__pb2.GetSimilarFileComponentIdsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
 
     @staticmethod
     def CreateFileComponentVectorEmbeddings(request,
