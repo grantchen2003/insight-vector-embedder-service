@@ -8,14 +8,17 @@ from vector_embedder_service.services import file_components_service
 from vector_embedder_service.utils import SourceCodeSummarizer, UniversalSentenceEncoder
 
 
+# place this helper in a better place
 def get_file_component_vector_embeddings(file_components):
     file_component_vector_embeddings = []
 
     for file_component in file_components:
+        # make this concurrent
         content_summary = SourceCodeSummarizer.summarize_source_code(
             file_component["content"]
         )
-
+        
+        # make this parallel?
         content_vector_embedding = UniversalSentenceEncoder.vector_embed_sentence(
             content_summary
         )
