@@ -3,8 +3,32 @@ from vector_embedder_service.protobufs import (
     vector_embedder_service_pb2_grpc,
 )
 
-from vector_embedder_service import database, utils
+from vector_embedder_service import database
 from vector_embedder_service.services import file_components_service
+from vector_embedder_service.utils import SourceCodeSummarizer, UniversalSentenceEncoder
+
+
+def get_file_component_vector_embeddings(file_components):
+    file_component_vector_embeddings = []
+
+    for file_component in file_components:
+        content_summary = SourceCodeSummarizer.summarize_source_code(
+            file_component["content"]
+        )
+
+        content_vector_embedding = UniversalSentenceEncoder.vector_embed_sentence(
+            content_summary
+        )
+
+        file_component_vector_embeddings.append(
+            {
+                "file_component_id": file_component["id"],
+                "user_id": file_component["user_id"],
+                "vector_embedding": content_vector_embedding,
+            }
+        )
+
+    return file_component_vector_embeddings
 
 
 class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderService):
@@ -15,16 +39,9 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
             request.file_component_ids
         )
 
-        file_component_vector_embeddings = [
-            {
-                "file_component_id": file_component["id"],
-                "user_id": file_component["user_id"],
-                "vector_embedding": utils.CodeBert.vector_embed(
-                    file_component["content"]
-                ),
-            }
-            for file_component in file_components
-        ]
+        file_component_vector_embeddings = get_file_component_vector_embeddings(
+            file_components
+        )
 
         db = database.get_singleton_instance()
 
@@ -39,7 +56,9 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
     def GetSimilarFileComponentIds(self, request, _):
         print("received GetSimilarFileComponentIds request")
 
-        query_vector_embedding = utils.CodeBert.vector_embed(request.query)
+        query_vector_embedding = UniversalSentenceEncoder.vector_embed_sentence(
+            request.query
+        )
 
         db = database.get_singleton_instance()
 

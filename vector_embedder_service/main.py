@@ -8,7 +8,8 @@ def main() -> None:
     config.load_env_vars(env)
     print(f"ENV={env}")
     
-    utils.CodeBert.initialize()
+    utils.UniversalSentenceEncoder.initialize()
+    utils.SourceCodeSummarizer.initialize()
     
     db = database.get_singleton_instance()
     db.connect()
