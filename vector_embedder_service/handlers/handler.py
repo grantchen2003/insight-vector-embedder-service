@@ -27,6 +27,7 @@ def get_file_component_vector_embeddings(file_components):
             {
                 "file_component_id": file_component["id"],
                 "user_id": file_component["user_id"],
+                "content_summary": content_summary,
                 "vector_embedding": content_vector_embedding,
             }
         )

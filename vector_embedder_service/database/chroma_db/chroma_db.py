@@ -31,6 +31,7 @@ class ChromaDb:
                     "file_component_id": file_component_vector_embedding[
                         "file_component_id"
                     ],
+                    "content_summary": file_component_vector_embedding["content_summary"]
                 }
             )
 
