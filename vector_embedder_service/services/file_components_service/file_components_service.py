@@ -18,7 +18,7 @@ def get_file_components(file_component_ids: list[int]) -> list[dict]:
         return [
             {
                 "id": file_component.id,
-                "user_id": file_component.user_id,
+                "repository_id": file_component.repository_id,
                 "file_path": file_component.file_path,
                 "start_line": file_component.start_line,
                 "end_line": file_component.end_line,

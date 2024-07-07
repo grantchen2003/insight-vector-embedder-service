@@ -3,7 +3,7 @@ syntax = "proto3";
 
 message FileComponent {
     int32 id = 1;
-    string user_id = 2;
+    string repository_id = 2;
     string file_path = 3;
     int32 start_line = 4;
     int32 end_line = 5;
@@ -18,12 +18,12 @@ message FileComponentIds {
     repeated int32 file_component_ids = 1;
 }
 
-message UserFilePaths {
-    string user_id = 1;
+message RepositoryFilePaths {
+    string repository_id = 1;
     repeated string file_paths = 2;
 }
 
 service FileComponentsService {
-    rpc CreateFileComponents(UserFilePaths) returns(FileComponents);
+    rpc CreateFileComponents(RepositoryFilePaths) returns(FileComponents);
     rpc GetFileComponents(FileComponentIds) returns (FileComponents);
 }

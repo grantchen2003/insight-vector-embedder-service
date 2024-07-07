@@ -41,7 +41,7 @@ class FileComponentsServiceStub(object):
         """
         self.CreateFileComponents = channel.unary_unary(
                 '/FileComponentsService/CreateFileComponents',
-                request_serializer=file__components__service__pb2.UserFilePaths.SerializeToString,
+                request_serializer=file__components__service__pb2.RepositoryFilePaths.SerializeToString,
                 response_deserializer=file__components__service__pb2.FileComponents.FromString,
                 _registered_method=True)
         self.GetFileComponents = channel.unary_unary(
@@ -71,7 +71,7 @@ def add_FileComponentsServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'CreateFileComponents': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateFileComponents,
-                    request_deserializer=file__components__service__pb2.UserFilePaths.FromString,
+                    request_deserializer=file__components__service__pb2.RepositoryFilePaths.FromString,
                     response_serializer=file__components__service__pb2.FileComponents.SerializeToString,
             ),
             'GetFileComponents': grpc.unary_unary_rpc_method_handler(
@@ -105,7 +105,7 @@ class FileComponentsService(object):
             request,
             target,
             '/FileComponentsService/CreateFileComponents',
-            file__components__service__pb2.UserFilePaths.SerializeToString,
+            file__components__service__pb2.RepositoryFilePaths.SerializeToString,
             file__components__service__pb2.FileComponents.FromString,
             options,
             channel_credentials,

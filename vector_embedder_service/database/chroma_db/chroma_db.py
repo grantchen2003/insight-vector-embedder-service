@@ -27,7 +27,7 @@ class ChromaDb:
             embeddings.append(file_component_vector_embedding["vector_embedding"])
             metadatas.append(
                 {
-                    "user_id": file_component_vector_embedding["user_id"],
+                    "repository_id": file_component_vector_embedding["repository_id"],
                     "file_component_id": file_component_vector_embedding[
                         "file_component_id"
                     ],
@@ -40,11 +40,11 @@ class ChromaDb:
         return ids
 
     @classmethod
-    def get_similar_file_component_ids(cls, user_id: str, vector_embedding: list[float], limit: int) -> list[int]:
+    def get_similar_file_component_ids(cls, repository_id: str, vector_embedding: list[float], limit: int) -> list[int]:
         results = cls._collection.query(
             query_embeddings=[vector_embedding],
             n_results=limit,
-            where={"user_id": user_id}
+            where={"repository_id": repository_id}
         )
         
         return [result["file_component_id"] for result in results["metadatas"][0]]

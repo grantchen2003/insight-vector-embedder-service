@@ -10,7 +10,7 @@ message CreateFileComponentVectorEmbeddingsResponse {
 }
 
 message GetSimilarFileComponentIdsRequest {
-    string user_id = 1;
+    string repository_id = 1;
     string query = 2;
     int32 limit = 3;
 }

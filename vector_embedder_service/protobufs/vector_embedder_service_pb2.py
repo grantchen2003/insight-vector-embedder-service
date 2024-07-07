@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dvector_embedder_service.proto\"H\n*CreateFileComponentVectorEmbeddingsRequest\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\"Z\n+CreateFileComponentVectorEmbeddingsResponse\x12+\n#file_component_vector_embedding_ids\x18\x01 \x03(\t\"R\n!GetSimilarFileComponentIdsRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05query\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"@\n\"GetSimilarFileComponentIdsResponse\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\x32\x81\x02\n\x15VectorEmbedderService\x12\x65\n\x1aGetSimilarFileComponentIds\x12\".GetSimilarFileComponentIdsRequest\x1a#.GetSimilarFileComponentIdsResponse\x12\x80\x01\n#CreateFileComponentVectorEmbeddings\x12+.CreateFileComponentVectorEmbeddingsRequest\x1a,.CreateFileComponentVectorEmbeddingsResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dvector_embedder_service.proto\"H\n*CreateFileComponentVectorEmbeddingsRequest\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\"Z\n+CreateFileComponentVectorEmbeddingsResponse\x12+\n#file_component_vector_embedding_ids\x18\x01 \x03(\t\"X\n!GetSimilarFileComponentIdsRequest\x12\x15\n\rrepository_id\x18\x01 \x01(\t\x12\r\n\x05query\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"@\n\"GetSimilarFileComponentIdsResponse\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\x32\x81\x02\n\x15VectorEmbedderService\x12\x65\n\x1aGetSimilarFileComponentIds\x12\".GetSimilarFileComponentIdsRequest\x1a#.GetSimilarFileComponentIdsResponse\x12\x80\x01\n#CreateFileComponentVectorEmbeddings\x12+.CreateFileComponentVectorEmbeddingsRequest\x1a,.CreateFileComponentVectorEmbeddingsResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -26,9 +26,9 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSRESPONSE']._serialized_start=107
   _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSRESPONSE']._serialized_end=197
   _globals['_GETSIMILARFILECOMPONENTIDSREQUEST']._serialized_start=199
-  _globals['_GETSIMILARFILECOMPONENTIDSREQUEST']._serialized_end=281
-  _globals['_GETSIMILARFILECOMPONENTIDSRESPONSE']._serialized_start=283
-  _globals['_GETSIMILARFILECOMPONENTIDSRESPONSE']._serialized_end=347
-  _globals['_VECTOREMBEDDERSERVICE']._serialized_start=350
-  _globals['_VECTOREMBEDDERSERVICE']._serialized_end=607
+  _globals['_GETSIMILARFILECOMPONENTIDSREQUEST']._serialized_end=287
+  _globals['_GETSIMILARFILECOMPONENTIDSRESPONSE']._serialized_start=289
+  _globals['_GETSIMILARFILECOMPONENTIDSRESPONSE']._serialized_end=353
+  _globals['_VECTOREMBEDDERSERVICE']._serialized_start=356
+  _globals['_VECTOREMBEDDERSERVICE']._serialized_end=613
 # @@protoc_insertion_point(module_scope)

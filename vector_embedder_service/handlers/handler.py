@@ -26,7 +26,7 @@ def get_file_component_vector_embeddings(file_components):
         file_component_vector_embeddings.append(
             {
                 "file_component_id": file_component["id"],
-                "user_id": file_component["user_id"],
+                "repository_id": file_component["repository_id"],
                 "content_summary": content_summary,
                 "vector_embedding": content_vector_embedding,
             }
@@ -67,7 +67,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         db = database.get_singleton_instance()
 
         file_component_ids = db.get_similar_file_component_ids(
-            request.user_id, query_vector_embedding, request.limit
+            request.repository_id, query_vector_embedding, request.limit
         )
 
         return vector_embedder_service_pb2.GetSimilarFileComponentIdsResponse(

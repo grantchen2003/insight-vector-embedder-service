@@ -18,6 +18,6 @@ class BaseDatabase(ABC):
 
     @abstractmethod
     def get_similar_file_component_ids(
-        cls, user_id: str, vector_embedding: list[float], limit: int
+        cls, repository_id: str, vector_embedding: list[float], limit: int
     ) -> list[int]:
         pass
