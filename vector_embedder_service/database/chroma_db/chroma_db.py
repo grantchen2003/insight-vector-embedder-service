@@ -48,3 +48,7 @@ class ChromaDb:
         )
         
         return [result["file_component_id"] for result in results["metadatas"][0]]
+    
+    @classmethod
+    def delete_file_component_vector_embeddings_by_repository_id(cls, repository_id: str) -> None:
+        cls._collection.delete(where={"repository_id": repository_id})

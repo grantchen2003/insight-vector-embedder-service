@@ -26,9 +26,9 @@ if [ -d "services" ]; then
 
 fi
 
-# Add "from . " to all lines that match "import *_pb2"
+# Add "from . " to all lines that match "import *_pb2", except for "import empty_pb2"
 files=$(find . -name '*_pb2_grpc.py')
 
 for file in $files; do
-    sed -i -e 's/import \([^ ]*\)_pb2/from . import \1_pb2/' "$file"
+    sed -i -e '/import .*_pb2/ { /import empty_pb2/! s/import \([^ ]*\)_pb2/from . import \1_pb2/ }' "$file"
 done

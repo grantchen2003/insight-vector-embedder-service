@@ -12,23 +12,26 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dvector_embedder_service.proto\"H\n*CreateFileComponentVectorEmbeddingsRequest\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\"Z\n+CreateFileComponentVectorEmbeddingsResponse\x12+\n#file_component_vector_embedding_ids\x18\x01 \x03(\t\"X\n!GetSimilarFileComponentIdsRequest\x12\x15\n\rrepository_id\x18\x01 \x01(\t\x12\r\n\x05query\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"@\n\"GetSimilarFileComponentIdsResponse\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\x32\x81\x02\n\x15VectorEmbedderService\x12\x65\n\x1aGetSimilarFileComponentIds\x12\".GetSimilarFileComponentIdsRequest\x1a#.GetSimilarFileComponentIdsResponse\x12\x80\x01\n#CreateFileComponentVectorEmbeddings\x12+.CreateFileComponentVectorEmbeddingsRequest\x1a,.CreateFileComponentVectorEmbeddingsResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dvector_embedder_service.proto\x1a\x1bgoogle/protobuf/empty.proto\"H\n*CreateFileComponentVectorEmbeddingsRequest\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\"Z\n+CreateFileComponentVectorEmbeddingsResponse\x12+\n#file_component_vector_embedding_ids\x18\x01 \x03(\t\"X\n!GetSimilarFileComponentIdsRequest\x12\x15\n\rrepository_id\x18\x01 \x01(\t\x12\r\n\x05query\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"@\n\"GetSimilarFileComponentIdsResponse\x12\x1a\n\x12\x66ile_component_ids\x18\x01 \x03(\x05\"Q\n8DeleteFileComponentVectorEmbeddingsByRepositoryIdRequest\x12\x15\n\rrepository_id\x18\x01 \x01(\t2\x8a\x03\n\x15VectorEmbedderService\x12\x65\n\x1aGetSimilarFileComponentIds\x12\".GetSimilarFileComponentIdsRequest\x1a#.GetSimilarFileComponentIdsResponse\x12\x80\x01\n#CreateFileComponentVectorEmbeddings\x12+.CreateFileComponentVectorEmbeddingsRequest\x1a,.CreateFileComponentVectorEmbeddingsResponse\x12\x86\x01\n1DeleteFileComponentVectorEmbeddingsByRepositoryId\x12\x39.DeleteFileComponentVectorEmbeddingsByRepositoryIdRequest\x1a\x16.google.protobuf.Emptyb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'vector_embedder_service_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSREQUEST']._serialized_start=33
-  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSREQUEST']._serialized_end=105
-  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSRESPONSE']._serialized_start=107
-  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSRESPONSE']._serialized_end=197
-  _globals['_GETSIMILARFILECOMPONENTIDSREQUEST']._serialized_start=199
-  _globals['_GETSIMILARFILECOMPONENTIDSREQUEST']._serialized_end=287
-  _globals['_GETSIMILARFILECOMPONENTIDSRESPONSE']._serialized_start=289
-  _globals['_GETSIMILARFILECOMPONENTIDSRESPONSE']._serialized_end=353
-  _globals['_VECTOREMBEDDERSERVICE']._serialized_start=356
-  _globals['_VECTOREMBEDDERSERVICE']._serialized_end=613
+  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSREQUEST']._serialized_start=62
+  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSREQUEST']._serialized_end=134
+  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSRESPONSE']._serialized_start=136
+  _globals['_CREATEFILECOMPONENTVECTOREMBEDDINGSRESPONSE']._serialized_end=226
+  _globals['_GETSIMILARFILECOMPONENTIDSREQUEST']._serialized_start=228
+  _globals['_GETSIMILARFILECOMPONENTIDSREQUEST']._serialized_end=316
+  _globals['_GETSIMILARFILECOMPONENTIDSRESPONSE']._serialized_start=318
+  _globals['_GETSIMILARFILECOMPONENTIDSRESPONSE']._serialized_end=382
+  _globals['_DELETEFILECOMPONENTVECTOREMBEDDINGSBYREPOSITORYIDREQUEST']._serialized_start=384
+  _globals['_DELETEFILECOMPONENTVECTOREMBEDDINGSBYREPOSITORYIDREQUEST']._serialized_end=465
+  _globals['_VECTOREMBEDDERSERVICE']._serialized_start=468
+  _globals['_VECTOREMBEDDERSERVICE']._serialized_end=862
 # @@protoc_insertion_point(module_scope)

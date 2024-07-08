@@ -1,8 +1,9 @@
+from google.protobuf import empty_pb2
+
 from vector_embedder_service.protobufs import (
     vector_embedder_service_pb2,
     vector_embedder_service_pb2_grpc,
 )
-
 from vector_embedder_service import database
 from vector_embedder_service.services import file_components_service
 from vector_embedder_service.utils import SourceCodeSummarizer, UniversalSentenceEncoder
@@ -17,7 +18,7 @@ def get_file_component_vector_embeddings(file_components):
         content_summary = SourceCodeSummarizer.summarize_source_code(
             file_component["content"]
         )
-        
+
         # make this parallel?
         content_vector_embedding = UniversalSentenceEncoder.vector_embed_sentence(
             content_summary
@@ -73,3 +74,14 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         return vector_embedder_service_pb2.GetSimilarFileComponentIdsResponse(
             file_component_ids=file_component_ids
         )
+
+    def DeleteFileComponentVectorEmbeddingsByRepositoryId(self, request, _):
+        print("received DeleteFileComponentVectorEmbeddingsByRepositoryId request")
+
+        db = database.get_singleton_instance()
+
+        db.delete_file_component_vector_embeddings_by_repository_id(
+            request.repository_id
+        )
+
+        return empty_pb2.Empty()

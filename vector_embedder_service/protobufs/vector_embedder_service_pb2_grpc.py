@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from . import vector_embedder_service_pb2 as vector__embedder__service__pb2
 
 GRPC_GENERATED_VERSION = '1.64.1'
@@ -49,6 +50,11 @@ class VectorEmbedderServiceStub(object):
                 request_serializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsRequest.SerializeToString,
                 response_deserializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsResponse.FromString,
                 _registered_method=True)
+        self.DeleteFileComponentVectorEmbeddingsByRepositoryId = channel.unary_unary(
+                '/VectorEmbedderService/DeleteFileComponentVectorEmbeddingsByRepositoryId',
+                request_serializer=vector__embedder__service__pb2.DeleteFileComponentVectorEmbeddingsByRepositoryIdRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
 
 
 class VectorEmbedderServiceServicer(object):
@@ -66,6 +72,12 @@ class VectorEmbedderServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def DeleteFileComponentVectorEmbeddingsByRepositoryId(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_VectorEmbedderServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -78,6 +90,11 @@ def add_VectorEmbedderServiceServicer_to_server(servicer, server):
                     servicer.CreateFileComponentVectorEmbeddings,
                     request_deserializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsRequest.FromString,
                     response_serializer=vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsResponse.SerializeToString,
+            ),
+            'DeleteFileComponentVectorEmbeddingsByRepositoryId': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteFileComponentVectorEmbeddingsByRepositoryId,
+                    request_deserializer=vector__embedder__service__pb2.DeleteFileComponentVectorEmbeddingsByRepositoryIdRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -134,6 +151,33 @@ class VectorEmbedderService(object):
             '/VectorEmbedderService/CreateFileComponentVectorEmbeddings',
             vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsRequest.SerializeToString,
             vector__embedder__service__pb2.CreateFileComponentVectorEmbeddingsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeleteFileComponentVectorEmbeddingsByRepositoryId(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/VectorEmbedderService/DeleteFileComponentVectorEmbeddingsByRepositoryId',
+            vector__embedder__service__pb2.DeleteFileComponentVectorEmbeddingsByRepositoryIdRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,

@@ -21,3 +21,7 @@ class BaseDatabase(ABC):
         cls, repository_id: str, vector_embedding: list[float], limit: int
     ) -> list[int]:
         pass
+
+    @abstractmethod
+    def delete_file_component_vector_embeddings_by_repository_id(cls, repository_id: str) -> None:
+        pass
