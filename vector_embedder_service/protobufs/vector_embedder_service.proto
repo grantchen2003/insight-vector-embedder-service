@@ -24,9 +24,15 @@ message DeleteFileComponentVectorEmbeddingsByRepositoryIdRequest {
     string repository_id = 1;
 }
 
+message DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIdsRequest {
+    string repository_id = 1;
+    repeated int32 file_component_ids = 2;
+}
+
 service VectorEmbedderService {
     rpc GetSimilarFileComponentIds(GetSimilarFileComponentIdsRequest) returns (GetSimilarFileComponentIdsResponse);
     rpc CreateFileComponentVectorEmbeddings(CreateFileComponentVectorEmbeddingsRequest) returns (CreateFileComponentVectorEmbeddingsResponse);
     rpc DeleteFileComponentVectorEmbeddingsByRepositoryId(DeleteFileComponentVectorEmbeddingsByRepositoryIdRequest) returns (google.protobuf.Empty);
+    rpc DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIds(DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIdsRequest) returns (google.protobuf.Empty);
 }
 

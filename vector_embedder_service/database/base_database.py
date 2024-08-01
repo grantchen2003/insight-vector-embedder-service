@@ -25,3 +25,7 @@ class BaseDatabase(ABC):
     @abstractmethod
     def delete_file_component_vector_embeddings_by_repository_id(cls, repository_id: str) -> None:
         pass
+    
+    @abstractmethod
+    def delete_file_component_vector_embeddings_by_repository_id_and_file_component_ids(cls, repository_id: str, file_component_ids: list[int]) -> None:
+        pass
