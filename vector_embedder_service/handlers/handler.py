@@ -92,7 +92,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         db = database.get_singleton_instance()
 
         db.delete_file_component_vector_embeddings_by_repository_id_and_file_component_ids(
-            request.repository_id, request.file_component_ids
+            request.repository_id, list(request.file_component_ids)
         )
 
         return empty_pb2.Empty()
