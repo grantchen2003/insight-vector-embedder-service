@@ -70,6 +70,8 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         file_component_ids = db.get_similar_file_component_ids(
             request.repository_id, query_vector_embedding, request.limit
         )
+        
+        print(file_component_ids)
 
         return vector_embedder_service_pb2.GetSimilarFileComponentIdsResponse(
             file_component_ids=file_component_ids
