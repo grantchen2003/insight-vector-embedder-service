@@ -1,0 +1,7 @@
+.venv
+.git
+.gitignore
+.docker-compose.yaml
+.dockerignore
+Dockerfile
+localdb/

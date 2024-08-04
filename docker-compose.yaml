@@ -1,0 +1,12 @@
+version: "24.0.2"
+
+services:
+  insight_vector_embedder_service:
+    build:
+      dockerfile: Dockerfile
+    environment:
+      - ENV=prod
+    env_file:
+      - .env.prod
+    ports:
+      - "50053:50053"
