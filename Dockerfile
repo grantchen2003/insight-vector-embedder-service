@@ -4,14 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install -r requirements.txt
+# processes the requirements.txt file in-place and creates a new file with the version constraints removed.
+RUN sed 's/==.*//' requirements.txt | sed 's/>=.*//' | sed 's/<.*//' | sed '/^$/d' > requirements_no_versions.txt
 
-# RUN pip install python-dotenv
-
-# RUN pip install openai
-
-# RUN pip install chromadb
-
-# RUN pip install tensorflow-hub
+RUN pip install -r requirements_no_versions.txt
 
 CMD ["python", "-m", "vector_embedder_service.main"]
