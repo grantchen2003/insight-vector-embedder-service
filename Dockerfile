@@ -9,4 +9,4 @@ RUN sed 's/==.*//' requirements.txt | sed 's/>=.*//' | sed 's/<.*//' | sed '/^$/
 
 RUN pip install -r requirements_no_versions.txt
 
-CMD ["python", "-m", "vector_embedder_service.main"]
+CMD ["python", "-u", "-m", "vector_embedder_service.main"]
