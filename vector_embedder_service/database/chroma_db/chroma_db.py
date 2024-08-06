@@ -55,6 +55,9 @@ class ChromaDb:
         
     @classmethod
     def delete_file_component_vector_embeddings_by_repository_id_and_file_component_ids(cls, repository_id: str, file_component_ids: list[int]) -> None:
+        if not file_component_ids:
+            return
+        
         cls._collection.delete(where={
             "$and": [
                 {
