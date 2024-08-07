@@ -1,3 +1,4 @@
+import logging
 from concurrent.futures import ThreadPoolExecutor
 from google.protobuf import empty_pb2
 
@@ -9,6 +10,14 @@ from vector_embedder_service import database
 from vector_embedder_service.services import file_components_service
 from vector_embedder_service.utils import SourceCodeSummarizer, UniversalSentenceEncoder
 
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(message)s",
+    datefmt="%Y/%m/%d %H:%M:%S",
+)
+
+logger = logging.getLogger(__name__)
 
 class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderService):
     def CreateFileComponentVectorEmbeddings(self, request, _):
@@ -28,7 +37,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
                 "vector_embedding": content_vector_embedding,
             }
 
-        print("received CreateFileComponentVectorEmbeddings request")
+        logger.info("received CreateFileComponentVectorEmbeddings request")
 
         file_components = file_components_service.get_file_components(
             request.file_component_ids
@@ -50,7 +59,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         )
 
     def GetSimilarFileComponentIds(self, request, _):
-        print("received GetSimilarFileComponentIds request")
+        logger.info("received GetSimilarFileComponentIds request")
 
         query_vector_embedding = UniversalSentenceEncoder.vector_embed_sentence(
             request.query
@@ -67,7 +76,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         )
 
     def DeleteFileComponentVectorEmbeddingsByRepositoryId(self, request, _):
-        print("received DeleteFileComponentVectorEmbeddingsByRepositoryId request")
+        logger.info("received DeleteFileComponentVectorEmbeddingsByRepositoryId request")
 
         db = database.get_singleton_instance()
 
@@ -80,7 +89,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
     def DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIds(
         self, request, _
     ):
-        print(
+        logger.info(
             "received DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIds request"
         )
 
