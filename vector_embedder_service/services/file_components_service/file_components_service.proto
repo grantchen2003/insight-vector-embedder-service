@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
 
 message FileComponent {
     int32 id = 1;
@@ -8,10 +9,6 @@ message FileComponent {
     int32 start_line = 4;
     int32 end_line = 5;
     string content = 6;
-}
-
-message FileComponents {
-    repeated FileComponent file_components = 1;
 }
 
 message FileComponentIds {
@@ -23,7 +20,18 @@ message RepositoryFilePaths {
     repeated string file_paths = 2;
 }
 
+message DeleteFileComponentsByRepositoryIdRequest {
+    string repository_id = 1;
+}
+
+message DeleteFileComponentsByRepositoryIdAndFilePathsRequest {
+    string repository_id = 1;
+    repeated string file_paths = 2;
+}
+
 service FileComponentsService {
-    rpc CreateFileComponents(RepositoryFilePaths) returns(FileComponents);
-    rpc GetFileComponents(FileComponentIds) returns (FileComponents);
+    rpc CreateFileComponents(RepositoryFilePaths) returns(stream FileComponent);
+    rpc GetFileComponents(FileComponentIds) returns (stream FileComponent);
+    rpc DeleteFileComponentsByRepositoryId(DeleteFileComponentsByRepositoryIdRequest) returns (google.protobuf.Empty);
+    rpc DeleteFileComponentsByRepositoryIdAndFilePaths(DeleteFileComponentsByRepositoryIdAndFilePathsRequest) returns (FileComponentIds);
 }

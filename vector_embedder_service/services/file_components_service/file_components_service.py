@@ -24,7 +24,7 @@ def get_file_components(file_component_ids: list[int]) -> list[dict]:
                 "end_line": file_component.end_line,
                 "content": file_component.content,
             }
-            for file_component in response.file_components
+            for file_component in response
         ]
         
         
