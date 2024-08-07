@@ -12,7 +12,6 @@ class SourceCodeSummarizer:
 
     @classmethod
     def summarize_source_code(cls, source_code: str) -> str:
-        return "this is a function that connects to db"
         response = cls._client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
