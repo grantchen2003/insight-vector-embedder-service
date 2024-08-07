@@ -1,5 +1,4 @@
-import chromadb, os
-
+import chromadb, itertools, os
 
 class ChromaDb:
     _client = None
@@ -19,6 +18,9 @@ class ChromaDb:
     def save_file_component_vector_embeddings(
         cls, file_component_vector_embeddings: list[dict]
     ) -> list[int]:
+        if not file_component_vector_embeddings:
+            return []
+        
         ids = []
         embeddings = []
         metadatas = []
@@ -51,7 +53,26 @@ class ChromaDb:
     
     @classmethod
     def delete_file_component_vector_embeddings_by_repository_id(cls, repository_id: str) -> None:
-        cls._collection.delete(where={"repository_id": repository_id})
+        def batchify(iterable, num_items_per_batch):
+            it = iter(iterable)
+            while batch := list(itertools.islice(it, num_items_per_batch)):
+                yield batch
+                
+        embedding_ids = cls._collection.get(where={"repository_id": repository_id})["ids"]
+        
+        for batch_embedding_ids in batchify(embedding_ids, num_items_per_batch = 5461):
+            cls._collection.delete(where={
+                "$and": [
+                    {
+                        "repository_id": repository_id
+                    }, 
+                    {
+                        "id": {
+                            "$in": batch_embedding_ids
+                        }
+                    }
+                ]
+            })
         
     @classmethod
     def delete_file_component_vector_embeddings_by_repository_id_and_file_component_ids(cls, repository_id: str, file_component_ids: list[int]) -> None:

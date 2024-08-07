@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor
 from google.protobuf import empty_pb2
 
 from vector_embedder_service.protobufs import (
@@ -9,44 +10,34 @@ from vector_embedder_service.services import file_components_service
 from vector_embedder_service.utils import SourceCodeSummarizer, UniversalSentenceEncoder
 
 
-# place this helper in a better place
-def get_file_component_vector_embeddings(file_components):
-    file_component_vector_embeddings = []
+class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderService):
+    def CreateFileComponentVectorEmbeddings(self, request, _):
+        def get_file_component_vector_embedding(file_component):
+            content_summary = SourceCodeSummarizer.summarize_source_code(
+                file_component["content"]
+            )
 
-    for file_component in file_components:
-        # make this concurrent
-        content_summary = SourceCodeSummarizer.summarize_source_code(
-            file_component["content"]
-        )
+            content_vector_embedding = UniversalSentenceEncoder.vector_embed_sentence(
+                content_summary
+            )
 
-        # make this parallel?
-        content_vector_embedding = UniversalSentenceEncoder.vector_embed_sentence(
-            content_summary
-        )
-
-        file_component_vector_embeddings.append(
-            {
+            return {
                 "file_component_id": file_component["id"],
                 "repository_id": file_component["repository_id"],
                 "content_summary": content_summary,
                 "vector_embedding": content_vector_embedding,
             }
-        )
 
-    return file_component_vector_embeddings
-
-
-class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderService):
-    def CreateFileComponentVectorEmbeddings(self, request, _):
         print("received CreateFileComponentVectorEmbeddings request")
 
         file_components = file_components_service.get_file_components(
             request.file_component_ids
         )
 
-        file_component_vector_embeddings = get_file_component_vector_embeddings(
-            file_components
-        )
+        with ThreadPoolExecutor() as executor:
+            file_component_vector_embeddings = list(
+                executor.map(get_file_component_vector_embedding, file_components)
+            )
 
         db = database.get_singleton_instance()
 
@@ -85,10 +76,14 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         )
 
         return empty_pb2.Empty()
-    
-    def DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIds(self, request, _):
-        print("received DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIds request")
-        
+
+    def DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIds(
+        self, request, _
+    ):
+        print(
+            "received DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIds request"
+        )
+
         db = database.get_singleton_instance()
 
         db.delete_file_component_vector_embeddings_by_repository_id_and_file_component_ids(
@@ -96,4 +91,3 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         )
 
         return empty_pb2.Empty()
-    
