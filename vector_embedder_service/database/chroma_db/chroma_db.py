@@ -56,23 +56,12 @@ class ChromaDb:
     
     @classmethod
     def delete_file_component_vector_embeddings_by_repository_id(cls, repository_id: str) -> None:
-        embedding_ids = cls._collection.get(where={"repository_id": repository_id})["ids"]
+        embedding_ids = cls._collection.get(where = {"repository_id": repository_id})["ids"]
         
         embedding_id_batches = Batchifier.batchify(embedding_ids, cls._MAX_NUM_EMBEDDINGS_PER_BATCH)
         
         for embedding_id_batch in embedding_id_batches:
-            cls._collection.delete(where={
-                "$and": [
-                    {
-                        "repository_id": repository_id
-                    }, 
-                    {
-                        "id": {
-                            "$in": embedding_id_batch
-                        }
-                    }
-                ]
-            })
+            cls._collection.delete(ids=embedding_id_batch)
         
     @classmethod
     def delete_file_component_vector_embeddings_by_repository_id_and_file_component_ids(cls, repository_id: str, file_component_ids: list[int]) -> None:
@@ -80,35 +69,13 @@ class ChromaDb:
             return
         
         embedding_ids = cls._collection.get(where={
-                "$and": [
-                    {
-                        "repository_id": repository_id
-                    },
-                    {
-                        "file_component_id": {
-                            "$in": file_component_ids
-                        }
-                    }
-                ]
-            })["ids"]
-        
+            "$and": [
+                {"repository_id": repository_id},
+                {"file_component_id": {"$in": file_component_ids}}
+            ]
+        })["ids"]
+
         embedding_id_batches = Batchifier.batchify(embedding_ids, cls._MAX_NUM_EMBEDDINGS_PER_BATCH)
         
         for embedding_id_batch in embedding_id_batches:
-            cls._collection.delete(where={
-                "$and": [
-                    {
-                        "repository_id": repository_id
-                    },
-                    {
-                        "file_component_id": {
-                            "$in": file_component_ids
-                        }
-                    },
-                    {
-                        "id": {
-                            "$in": embedding_id_batch
-                        }
-                    }
-                ]
-            })
+            cls._collection.delete(ids=embedding_id_batch)
