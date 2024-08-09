@@ -1,3 +1,3 @@
 from .batchifier import Batchifier
-from .source_code_summarizer import SourceCodeSummarizer
+from .source_code_summarizer import get_singleton_instance
 from .universal_sentence_encoder import UniversalSentenceEncoder

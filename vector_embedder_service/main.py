@@ -9,7 +9,7 @@ def main() -> None:
     print(f"ENV={env}")
     
     utils.UniversalSentenceEncoder.initialize()
-    utils.SourceCodeSummarizer.initialize()
+    utils.source_code_summarizer.get_singleton_instance().initialize()
     
     db = database.get_singleton_instance()
     db.connect()

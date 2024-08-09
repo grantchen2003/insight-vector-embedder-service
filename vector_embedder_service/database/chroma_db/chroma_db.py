@@ -5,7 +5,7 @@ from vector_embedder_service.utils import Batchifier
 class ChromaDb:
     _client = None
     _conn = None
-    _MAX_NUM_EMBEDDINGS_PER_BATCH = 5461
+    _MAX_NUM_ITEMS_PER_WRITE = 5461
 
     @classmethod
     def connect(cls) -> None:
@@ -39,8 +39,13 @@ class ChromaDb:
                     "content_summary": file_component_vector_embedding["content_summary"]
                 }
             )
-
-        cls._collection.add(embeddings=embeddings, metadatas=metadatas, ids=ids)
+            
+        embeddings_batches = Batchifier.batchify(embeddings, cls._MAX_NUM_ITEMS_PER_WRITE)
+        metadatas_batches = Batchifier.batchify(metadatas, cls._MAX_NUM_ITEMS_PER_WRITE)
+        ids_batches = Batchifier.batchify(ids, cls._MAX_NUM_ITEMS_PER_WRITE)
+        
+        for embeddings, metadatas, ids in zip(embeddings_batches, metadatas_batches, ids_batches):
+            cls._collection.add(embeddings=embeddings, metadatas=metadatas, ids=ids)
         
         return ids
 
@@ -58,7 +63,7 @@ class ChromaDb:
     def delete_file_component_vector_embeddings_by_repository_id(cls, repository_id: str) -> None:
         embedding_ids = cls._collection.get(where = {"repository_id": repository_id})["ids"]
         
-        embedding_id_batches = Batchifier.batchify(embedding_ids, cls._MAX_NUM_EMBEDDINGS_PER_BATCH)
+        embedding_id_batches = Batchifier.batchify(embedding_ids, cls._MAX_NUM_ITEMS_PER_WRITE)
         
         for embedding_id_batch in embedding_id_batches:
             cls._collection.delete(ids=embedding_id_batch)
@@ -75,7 +80,7 @@ class ChromaDb:
             ]
         })["ids"]
 
-        embedding_id_batches = Batchifier.batchify(embedding_ids, cls._MAX_NUM_EMBEDDINGS_PER_BATCH)
+        embedding_id_batches = Batchifier.batchify(embedding_ids, cls._MAX_NUM_ITEMS_PER_WRITE)
         
         for embedding_id_batch in embedding_id_batches:
             cls._collection.delete(ids=embedding_id_batch)
