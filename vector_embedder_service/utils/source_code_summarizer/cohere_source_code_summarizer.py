@@ -1,6 +1,5 @@
-import cohere, os, time
+import cohere, os, time, requests
 from .base_source_code_summarizer import BaseSourceCodeSummarizer
-
 
 
 class CohereSourceCodeSummarizer(BaseSourceCodeSummarizer):
@@ -18,14 +17,32 @@ class CohereSourceCodeSummarizer(BaseSourceCodeSummarizer):
         if cls._client is None:
             return "placeholder for source code summary"
 
-        while True:
-            try:
-                response = cls._client.generate(
-                    model="command",
-                    prompt="Semantically summarize this source code into 1 sentence: "
-                    + source_code,
-                )
-                return response.generations[0].text.strip()
+        url = "https://api.cohere.com/v1/chat"
+        headers = {
+            "Authorization": f'Bearer {os.getenv("COHERE_API_KEY")}',
+            "Content-Type": "application/json",
+        }
+        data = {
+            "message": f"In exactly 1 sentence, semantically summarize the following source code. Do not include any additional phrases or polite expressions:\n{source_code}",
+            "max_tokens": 50,
+        }
 
-            except cohere.errors.TooManyRequestsError:
-                pass
+        max_retries = 5
+        retry_delay = 2  # Initial delay in seconds
+
+        for attempt in range(max_retries):
+            try:
+                response = requests.post(url, headers=headers, json=data)
+                response.raise_for_status()
+                return response.json()["text"].strip()
+            
+            except requests.exceptions.HTTPError as e:
+                if response.status_code == 429:
+                    if attempt < max_retries - 1:
+                        print(f"Rate limit exceeded. Retrying in {retry_delay} seconds...")
+                        time.sleep(retry_delay)
+                        retry_delay *= 2  # Exponential backoff
+                    else:
+                        raise Exception("Max retries reached. Aborting.") from e
+                else:
+                    raise e

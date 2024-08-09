@@ -1,5 +1,4 @@
-import logging
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import datetime
 from google.protobuf import empty_pb2
 
 from vector_embedder_service.protobufs import (
@@ -8,55 +7,48 @@ from vector_embedder_service.protobufs import (
 )
 from vector_embedder_service import database
 from vector_embedder_service.services import file_components_service
-from vector_embedder_service.utils import source_code_summarizer, UniversalSentenceEncoder
-
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(message)s",
-    datefmt="%Y/%m/%d %H:%M:%S",
+from vector_embedder_service.utils import (
+    source_code_summarizer,
+    UniversalSentenceEncoder,
 )
 
-logger = logging.getLogger(__name__)
+
+def print_with_timestamp(message):
+    now = datetime.datetime.now()
+    timestamp = now.strftime("%Y/%m/%d %H:%M:%S")
+    print(f"{timestamp} {message}")
 
 
 class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderService):
     def CreateFileComponentVectorEmbeddings(self, request, _):
-        def get_file_component_vector_embedding(file_component):
-            content_summary = (
-                source_code_summarizer.get_singleton_instance().summarize_source_code(
-                    file_component["content"]
-                )
-            )
-
-            content_vector_embedding = UniversalSentenceEncoder.vector_embed_sentence(
-                content_summary
-            )
-
-            return {
-                "file_component_id": file_component["id"],
-                "repository_id": file_component["repository_id"],
-                "content_summary": content_summary,
-                "vector_embedding": content_vector_embedding,
-            }
-
-        logger.info("received CreateFileComponentVectorEmbeddings request")
+        print_with_timestamp("received CreateFileComponentVectorEmbeddings request")
 
         file_components = file_components_service.get_file_components(
             request.file_component_ids
         )
 
-        with ThreadPoolExecutor() as executor:
-            futures = {
-                executor.submit(
-                    get_file_component_vector_embedding, component
-                ): component
-                for component in file_components
-            }
+        content_summaries = (
+            source_code_summarizer.get_singleton_instance().summarize_source_code_list(
+                [file_component["content"] for file_component in file_components]
+            )
+        )
 
-            file_component_vector_embeddings = []
-            for future in as_completed(futures):
-                file_component_vector_embeddings.append(future.result())
+        content_vector_embeddings = [
+            UniversalSentenceEncoder.vector_embed_sentence(content_summary)
+            for content_summary in content_summaries
+        ]
+
+        file_component_vector_embeddings = [
+            {
+                "file_component_id": file_component["id"],
+                "repository_id": file_component["repository_id"],
+                "content_summary": content_summary,
+                "vector_embedding": content_vector_embedding,
+            }
+            for file_component, content_summary, content_vector_embedding in zip(
+                file_components, content_summaries, content_vector_embeddings
+            )
+        ]
 
         db = database.get_singleton_instance()
 
@@ -69,7 +61,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         )
 
     def GetSimilarFileComponentIds(self, request, _):
-        logger.info("received GetSimilarFileComponentIds request")
+        print_with_timestamp("received GetSimilarFileComponentIds request")
 
         query_vector_embedding = UniversalSentenceEncoder.vector_embed_sentence(
             request.query
@@ -86,9 +78,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
         )
 
     def DeleteFileComponentVectorEmbeddingsByRepositoryId(self, request, _):
-        logger.info(
-            "received DeleteFileComponentVectorEmbeddingsByRepositoryId request"
-        )
+        print_with_timestamp("received DeleteFileComponentVectorEmbeddingsByRepositoryId request")
 
         db = database.get_singleton_instance()
 
@@ -101,7 +91,7 @@ class VectorEmbedderService(vector_embedder_service_pb2_grpc.VectorEmbedderServi
     def DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIds(
         self, request, _
     ):
-        logger.info(
+        print_with_timestamp(
             "received DeleteFileComponentVectorEmbeddingsByRepositoryIdAndFileComponentIds request"
         )
 
