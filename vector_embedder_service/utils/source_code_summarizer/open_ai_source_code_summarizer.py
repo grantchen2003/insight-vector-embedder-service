@@ -18,7 +18,14 @@ class OpenAiSourceCodeSummarizer(BaseSourceCodeSummarizer):
 
     @classmethod
     def summarize_source_code_list(cls, source_code_list: list[str]) -> list[str]:
-        # batch by tokens as well
+        '''
+        Bottom of https://platform.openai.com/docs/guides/batch/rate-limits
+        
+        middle of https://platform.openai.com/docs/guides/rate-limits:
+        Batch API queue limits are calculated based on the total number of input tokens queued for a given model. 
+        Tokens from pending batch jobs are counted against your queue limit. 
+        Once a batch job is completed, its tokens are no longer counted against that model's limit.
+        '''
         source_code_batches = Batchifier.batchify(source_code_list, 100)
 
         with ThreadPoolExecutor() as executor:
@@ -77,12 +84,12 @@ class OpenAiSourceCodeSummarizer(BaseSourceCodeSummarizer):
         )
 
         while True:
-            batch_status = cls._client.batches.retrieve(batch.id)
-            if batch_status.status == "completed":
+            batch = cls._client.batches.retrieve(batch.id)
+            if batch.status == "completed":
                 break
             time.sleep(1)
 
-        file_response = cls._client.files.content(batch_status.output_file_id)
+        file_response = cls._client.files.content(batch.output_file_id)
 
         source_code_summaries = [""] * len(source_code_list)
         for response in file_response.text.strip().split("\n"):
