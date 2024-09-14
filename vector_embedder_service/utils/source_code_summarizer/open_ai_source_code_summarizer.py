@@ -9,7 +9,7 @@ class OpenAiSourceCodeSummarizer(BaseSourceCodeSummarizer):
     _MODEL = "gpt-3.5-turbo"
     _MAX_NUM_REQUESTS_PER_BATCH = 50_000
     _MAX_BYTES_PER_BATCH_FILE = 100_000_000
-    _MAX_TOKEN_COUNT_PER_BATCH = 16_385
+    _MAX_TOKEN_COUNT_PER_BATCH = 2_000_000
     _MAX_TOKEN_COUNT_PER_RESPONSE = 60
     _client = None
 
@@ -138,7 +138,6 @@ class OpenAiSourceCodeSummarizer(BaseSourceCodeSummarizer):
             response = json.loads(response)
             source_code_summaries[custom_id_to_index[response["custom_id"]]] = response[
                 "response"
-
             ]["body"]["choices"][0]["message"]["content"]
 
         return source_code_summaries
